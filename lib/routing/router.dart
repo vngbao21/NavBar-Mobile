@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_hello/layout/browse_layout.dart';
 import 'package:flutter_application_hello/layout/main_layout.dart';
+import 'package:flutter_application_hello/layout/search_layout.dart';
 import 'package:flutter_application_hello/layout/todo_layout.dart';
+import 'package:flutter_application_hello/layout/upcoming_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,9 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/today',
     navigatorKey: _rootNavigation,
     debugLogDiagnostics: true,
-    redirect: (context, state) {
-      return '/today';
-    },
+
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigation,
@@ -22,7 +23,26 @@ final routerProvider = Provider<GoRouter>((ref) {
           return MainLayout(child: child);
         },
         routes: <RouteBase>[
-          GoRoute(path: '/today', builder: (context, state) => TodoLayout()),
+          GoRoute(
+            path: '/today',
+            parentNavigatorKey: _shellNavigation,
+            builder: (context, state) => TodoLayout(),
+          ),
+          GoRoute(
+            path: '/upcoming',
+            parentNavigatorKey: _shellNavigation,
+            builder: (context, state) => UpcomingLayout(),
+          ),
+          GoRoute(
+            path: '/search',
+            parentNavigatorKey: _shellNavigation,
+            builder: (context, state) => SearchLayout(),
+          ),
+          GoRoute(
+            path: '/browse',
+            parentNavigatorKey: _shellNavigation,
+            builder: (context, state) => BrowseLayout(),
+          ),
         ],
       ),
     ],

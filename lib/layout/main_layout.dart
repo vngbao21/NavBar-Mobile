@@ -26,7 +26,7 @@ class MainLayout extends ConsumerWidget {
               context.go('/upcoming');
               break;
             case 2:
-              context.go('/searched');
+              context.go('/search');
               break;
             case 3:
               context.go('/browse');
@@ -38,7 +38,7 @@ class MainLayout extends ConsumerWidget {
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.calendar_today_outlined),
-            selectedIcon: Icon(Icons.calendar_today, color: Colors.blue),
+            selectedIcon: Icon(Icons.edit_calendar, color: Colors.blue),
             label: "Today",
           ),
           NavigationDestination(
