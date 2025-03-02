@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_hello/provider/app_sate.provider.dart';
+import 'package:flutter_application_hello/provider/app_state.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +10,8 @@ class MainLayout extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(appStateProvider).currentIndex;
+    final appState = ref.watch(appStateProvider);
+    final currentIndex = appState.currentIndex;
 
     return Scaffold(
       body: child,
@@ -20,40 +21,34 @@ class MainLayout extends ConsumerWidget {
           ref.read(appStateProvider.notifier).setCurrentIndex(index);
           switch (index) {
             case 0:
-              context.go('/today');
+              context.go('/today', extra: currentIndex);
               break;
             case 1:
-              context.go('/upcoming');
+              context.go('/upcoming', extra: currentIndex);
               break;
             case 2:
-              context.go('/search');
+              context.go('/search', extra: currentIndex);
               break;
             case 3:
-              context.go('/browse');
-              break;
-            default:
+              context.go('/browse', extra: currentIndex);
               break;
           }
         },
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.calendar_today_outlined),
-            selectedIcon: Icon(Icons.edit_calendar, color: Colors.blue),
             label: "Today",
           ),
           NavigationDestination(
             icon: Icon(Icons.access_time_outlined),
-            selectedIcon: Icon(Icons.access_time, color: Colors.green),
             label: "Upcoming",
           ),
           NavigationDestination(
             icon: Icon(Icons.search_outlined),
-            selectedIcon: Icon(Icons.search, color: Colors.red),
             label: "Search",
           ),
           NavigationDestination(
             icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore, color: Colors.purple),
             label: "Browse",
           ),
         ],
